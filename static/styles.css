@@ -1,0 +1,523 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    font-size: 18px;
+    min-height: 100vh;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 2.2em;
+    }
+    form {
+        padding: 20px;
+    }
+    textarea {
+        height: 120px;
+        font-size: 1em;
+    }
+    input[type="submit"] {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+    #output {
+        padding: 20px;
+    }
+    #output p {
+        font-size: 1.1em;
+    }
+}
+
+/* Tabs */
+.tabs {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.tab-button {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.tab-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+.tab-button:hover {
+    background-color: #e9ecef;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header-icon {
+    width: 60px;
+    height: auto;
+    margin-right: 15px;
+}
+
+h1 {
+    color: #0056b3;
+    font-size: 3.5em;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Form Container and Tab Content Container */
+form, .tab-content {
+    width: 100%;
+    max-width: 650px;
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Direction Selector */
+.direction-selector {
+    margin-bottom: 25px;
+    text-align: center;
+}
+.direction-selector label {
+    font-size: 1.3em;
+    margin: 0 15px;
+    cursor: pointer;
+}
+.direction-selector input[type="radio"] {
+    margin-right: 8px;
+}
+.direction-selector input[type="radio"]:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Textarea */
+textarea {
+    width: 95%;
+    height: 140px;
+    padding: 18px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1.5em;
+    background-color: #ffffff;
+    color: #333;
+    resize: vertical;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    outline: none;
+}
+
+/* Submit Button and Translate Buttons */
+input[type="submit"], input[type="button"]#voice-translate-btn, input[type="button"]#text-translate-btn, input[type="button"]#image-translate-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 14px 35px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(40,167,69,0.2);
+}
+input[type="submit"]:hover, input[type="button"]#voice-translate-btn:hover, input[type="button"]#text-translate-btn:hover, input[type="button"]#image-translate-btn:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 15px rgba(40,167,69,0.3);
+}
+input[type="submit"]:active, input[type="button"]#voice-translate-btn:active, input[type="button"]#text-translate-btn:active, input[type="button"]#image-translate-btn:active {
+    transform: scale(0.98);
+}
+input[type="submit"]:focus, input[type="button"]#voice-translate-btn:focus, input[type="button"]#text-translate-btn:focus, input[type="button"]#image-translate-btn:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Voice Input Button */
+#voice-input-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    margin-top: 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0,123,255,0.2);
+}
+#voice-input-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 15px rgba(0,123,255,0.3);
+}
+#voice-input-btn:active {
+    transform: scale(0.98);
+}
+#voice-input-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Image Input */
+#image-input {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1.1em;
+    background-color: #ffffff;
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px;
+}
+#image-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    outline: none;
+}
+
+
+/* Image Output Area */
+#image-output {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 4px solid #007bff;
+}
+#image-output p {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+#image-output p span {
+    color: #333;
+    font-weight: normal;
+}
+
+
+/* Voice Status Text */
+#voice-status {
+    display: inline-block;
+    margin-top: 15px;
+    color: #666;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+/* Save Buttons - Consistent for all translation types */
+#text-save-btn, #voice-save-btn, #image-save-btn {
+    background-color: #17a2b8;
+    color: white;
+    padding: 10px 25px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(23,162,184,0.2);
+}
+#text-save-btn:hover, #voice-save-btn:hover, #image-save-btn:hover {
+    background-color: #138496;
+    box-shadow: 0 6px 15px rgba(23,162,184,0.3);
+}
+#text-save-btn:active, #voice-save-btn:active, #image-save-btn:active {
+    transform: scale(0.98);
+}
+
+/* Output Areas - Consistent for all translation types */
+#output, #voice-output, #image-output {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 4px solid #007bff;
+}
+#output p, #voice-output p, #image-output p {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+#output p span, #voice-output p span, #image-output p span {
+    color: #333;
+    font-weight: normal;
+}
+
+/* Audio Player */
+audio {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Light Mode (default) */
+body.light-mode {
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+body.light-mode .header-container h1 {
+    color: #0056b3;
+}
+
+body.light-mode form {
+    background-color: #ffffff;
+    color: #333;
+}
+
+body.light-mode #output {
+    background-color: #ffffff;
+    color: #007bff;
+    border-left: 6px solid #007bff;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .header-container h1 {
+    color: #bb86fc;
+}
+
+body.dark-mode form {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+body.dark-mode #output, body.dark-mode #voice-output, body.dark-mode #image-output {
+    background-color: #2c2c2c;
+    border-left: 4px solid #bb86fc;
+}
+
+body.dark-mode #output p, body.dark-mode #voice-output p, body.dark-mode #image-output p {
+    color: #bb86fc;
+}
+
+body.dark-mode #output p span, body.dark-mode #voice-output p span, body.dark-mode #image-output p span {
+    color: #e0e0e0;
+}
+
+body.dark-mode textarea {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode input[type="submit"] {
+    background-color: #bb86fc;
+    color: #121212;
+    box-shadow: 0 4px 10px rgba(187,134,252,0.5);
+}
+
+body.dark-mode input[type="submit"]:hover, body.dark-mode input[type="button"]#voice-translate-btn:hover, body.dark-mode input[type="button"]#text-translate-btn:hover {
+    background-color: #9a67ea;
+    box-shadow: 0 6px 15px rgba(154,103,234,0.7);
+}
+
+body.dark-mode #voice-input-btn {
+    background-color: #bb86fc;
+    color: #121212;
+}
+
+body.dark-mode #voice-input-btn:hover {
+    background-color: #9a67ea;
+}
+
+body.dark-mode #voice-status {
+    color: #b0b0b0;
+}
+
+
+body.dark-mode #text-save-btn, body.dark-mode #voice-save-btn, body.dark-mode #image-save-btn {
+    background-color: #03dac6;
+    color: #121212;
+}
+
+body.dark-mode #text-save-btn:hover, body.dark-mode #voice-save-btn:hover, body.dark-mode #image-save-btn:hover {
+    background-color: #02c4b0;
+}
+
+body.dark-mode #image-input {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode #image-translate-btn {
+    background-color: #bb86fc;
+    color: #121212;
+    box-shadow: 0 4px 10px rgba(187,134,252,0.5);
+}
+
+body.dark-mode #image-translate-btn:hover {
+    background-color: #9a67ea;
+    box-shadow: 0 6px 15px rgba(154,103,234,0.7);
+}
+
+
+
+/* Settings Tab Styling */
+#settings {
+    width: 100%;
+    max-width: 650px;
+}
+
+#settings h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #0056b3;
+    font-size: 2em;
+}
+
+#settings-form {
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0;
+}
+
+#settings-form label {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+#settings-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+#settings-form select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#settings-form input[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Dark mode for settings */
+body.dark-mode #settings h2 {
+    color: #bb86fc;
+}
+
+body.dark-mode #settings-form label {
+    color: #e0e0e0;
+}
+
+body.dark-mode #settings-form select {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body.dark-mode #settings-form select:focus {
+    border-color: #bb86fc;
+}
+
+/* Saved Translations Tab Styling */
+#saved {
+    width: 100%;
+    max-width: 650px;
+}
+
+#saved h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #0056b3;
+    font-size: 2em;
+}
+
+#saved-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#saved-list li {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#saved-list li strong {
+    color: #0056b3;
+    font-size: 1.1em;
+}
+
+#saved-list li p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Dark mode for saved */
+body.dark-mode #saved h2 {
+    color: #bb86fc;
+}
+
+body.dark-mode #saved-list li {
+    background-color: #2c2c2c;
+    border-left-color: #bb86fc;
+}
+
+body.dark-mode #saved-list li strong {
+    color: #bb86fc;
+}
+
+body.dark-mode #saved-list li p {
+    color: #b0b0b0;
+}

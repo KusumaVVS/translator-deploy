@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-header h1 {
+            font-size: 1.4rem;
+            color: #ecf0f1;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+        
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #3498db;
+        }
+        
+        .nav-item.active {
+            background: rgba(52, 152, 219, 0.3);
+            border-left-color: #3498db;
+        }
+        
+        .nav-item .icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: #f5f6fa;
+            overflow-y: auto;
+        }
+        
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .content-section h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        /* Direction Selector */
+        .direction-selector {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .direction-selector label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .direction-selector select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .direction-selector select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Textarea */
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 15px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-primary:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #27ae60;
+        }
+        
+        /* Output Area */
+        .output-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            display: none;
+        }
+        
+        .output-container.show {
+            display: block;
+        }
+        
+        .output-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .output-text {
+            font-size: 1.1rem;
+            color: #27ae60;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .audio-container {
+            margin: 15px 0;
+        }
+        
+        /* Image Upload */
+        .image-upload {
+            margin-bottom: 20px;
+        }
+        
+        .image-upload input[type="file"] {
+            padding: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+        /* Saved Translations List */
+        #saved-list {
+            list-style: none;
+        }
+        
+        #saved-list li {
+            padding: 15px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        
+        /* Settings Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+        
+        /* Voice Input */
+        .voice-controls {
+            margin: 15px 0;
+        }
+        
+        .voice-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background: #9b59b6;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .voice-btn:hover {
+            background: #8e44ad;
+            transform: scale(1.05);
+        }
+        
+        .voice-status {
+            margin-top: 10px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>🌐 Language Translator</h1>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-tab="text-translate">
+                <span class="icon">📝</span>
+                <span>Text Translation</span>
+            </li>
+            <li class="nav-item" data-tab="voice-translate">
+                <span class="icon">🎤</span>
+                <span>Voice Translation</span>
+            </li>
+            <li class="nav-item" data-tab="image-translate">
+                <span class="icon">🖼️</span>
+                <span>Image Translation</span>
+            </li>
+            <li class="nav-item" data-tab="saved">
+                <span class="icon">💾</span>
+                <span>Saved Translations</span>
+            </li>
+            <li class="nav-item" data-tab="settings">
+                <span class="icon">⚙️</span>
+                <span>Settings</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Text Translation Section -->
+        <div id="text-translate" class="content-section active">
+            <h2>📝 Text Translation</h2>
+            <div class="direction-selector">
+                <label for="text-direction">Select Language:</label>
+                <select name="text-direction" id="text-direction">
+                    <option value="en-hi">English to Hindi</option>
+                    <option value="hi-en">Hindi to English</option>
+                    <option value="en-te">English to Telugu</option>
+                    <option value="te-en">Telugu to English</option>
+                </select>
+            </div>
+            <textarea id="text-input" placeholder="Enter text here..." required></textarea>
+            <button class="btn btn-primary" id="text-translate-btn">Translate</button>
+            <div id="text-output" class="output-container">
+                <div class="output-label">Translated Text:</div>
+                <div class="output-text" id="text-translated-text"></div>
+                <div class="audio-container" id="text-audio-container"></div>
+                <button class="btn btn-secondary" id="text-save-btn">Save Translation</button>
+            </div>
+        </div>
+
+        <!-- Voice Translation Section -->
+        <div id="voice-translate" class="content-section">
+            <h2>🎤 Voice Translation</h2>
+            <div class="direction-selector">
+                <label for="voice-direction">Select Language:</label>
+                <select name="voice-direction" id="voice-direction">
+                    <option value="en-hi">English to Hindi</option>
+                    <option value="hi-en">Hindi to English</option>
+                    <option value="en-te">English to Telugu</option>
+                    <option value="te-en">Telugu to English</option>
+                </select>
+            </div>
+            <textarea id="voice-textarea" placeholder="Enter text here or use voice input..."></textarea>
+            
+            <div class="voice-controls">
+                <button type="button" class="voice-btn" id="voice-input-btn">🎤 Speak Now</button>
+                <p class="voice-status" id="voice-status">Click the button to start voice input</p>
+            </div>
+            
+            <button class="btn btn-primary" id="voice-translate-btn">Translate</button>
+            
+            <div id="voice-output" class="output-container">
+                <div class="output-label">Translated Text:</div>
+                <div class="output-text" id="voice-translated-text"></div>
+                <div class="audio-container" id="voice-audio-container"></div>
+                <button class="btn btn-secondary" id="voice-save-btn">Save Translation</button>
+            </div>
+        </div>
+
+        <!-- Image Translation Section -->
+        <div id="image-translate" class="content-section">
+            <h2>🖼️ Image Translation</h2>
+            <div class="direction-selector">
+                <label for="image-direction">Select Language:</label>
+                <select name="image-direction" id="image-direction">
+                    <option value="en-hi">English to Hindi</option>
+                    <option value="hi-en">Hindi to English</option>
+                    <option value="en-te">English to Telugu</option>
+                    <option value="te-en">Telugu to English</option>
+                </select>
+            </div>
+            <div class="image-upload">
+                <input type="file" id="image-input" accept="image/*">
+            </div>
+            <button class="btn btn-primary" id="image-translate-btn">Translate Image</button>
+            
+            <div id="image-output" class="output-container">
+                <div class="output-label">Original Text:</div>
+                <div class="output-text" id="image-original-text" style="color: #7f8c8d;"></div>
+                <div class="output-label">Translated Text:</div>
+                <div class="output-text" id="image-translated-text"></div>
+                <div class="audio-container" id="image-audio-container"></div>
+                <button class="btn btn-secondary" id="image-save-btn">Save Translation</button>
+            </div>
+        </div>
+
+        <!-- Saved Translations Section -->
+        <div id="saved" class="content-section">
+            <h2>💾 Saved Translations</h2>
+            <ul id="saved-list"></ul>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" class="content-section">
+            <h2>⚙️ Settings</h2>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="theme_mode">Theme Mode:</label>
+                    <select name="theme_mode" id="theme_mode">
+                        <option value="light">Light Mode</option>
+                        <option value="dark">Dark Mode</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Sidebar Navigation ---
+    const navItems = document.querySelectorAll('.nav-item');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const tab = item.getAttribute('data-tab');
+            
+            // Update nav items
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Update content sections
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === tab) {
+                    section.classList.add('active');
+                }
+            });
+            
+            // Load data if needed
+            if (tab === 'saved') loadSaved();
+            if (tab === 'settings') loadSettings();
+        });
+    });
+
+    // --- direction change clears textareas ---
+    const textDirectionSelect = document.getElementById('text-direction');
+    const textTextarea = document.getElementById('text-input');
+    if (textDirectionSelect) {
+        textDirectionSelect.addEventListener('change', () => {
+            if (textTextarea) textTextarea.value = '';
+            const textOutput = document.getElementById('text-output');
+            if (textOutput) {
+                textOutput.classList.remove('show');
+            }
+        });
+    }
+
+    const voiceDirectionSelect = document.getElementById('voice-direction');
+    if (voiceDirectionSelect) {
+        voiceDirectionSelect.addEventListener('change', () => {
+            const voiceTextarea = document.getElementById('voice-textarea');
+            if (voiceTextarea) voiceTextarea.value = '';
+        });
+    }
+
+    // --- text translate ---
+    const textTranslateBtn = document.getElementById('text-translate-btn');
+    const textInput = document.getElementById('text-input');
+    const textOutput = document.getElementById('text-output');
+    const textTranslatedText = document.getElementById('text-translated-text');
+    const textAudioContainer = document.getElementById('text-audio-container');
+    const textSaveBtn = document.getElementById('text-save-btn');
+    const speechSynthesisAvailable = 'speechSynthesis' in window;
+
+    if (textTranslateBtn) {
+        textTranslateBtn.addEventListener('click', () => {
+            const inputText = textInput.value.trim();
+            const directionSelect = document.getElementById('text-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+            if (!inputText) {
+                alert('Please enter text to translate.');
+                return;
+            }
+
+            textTranslateBtn.disabled = true;
+            textTranslateBtn.textContent = 'Translating...';
+
+            const payload = { input_text: inputText, direction: direction };
+
+            fetch('/translate_api', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                if (data.translated_text) {
+                    textTranslatedText.textContent = data.translated_text;
+                    textOutput.classList.add('show');
+
+                    const audioUrl = data.audio_path;
+                    if (audioUrl) {
+                        textAudioContainer.innerHTML = `
+                            <audio controls>
+                                <source src="${audioUrl}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <button id="text-tts-btn" title="Text to Speech" style="margin-left:10px;padding:8px 15px;cursor:pointer;">🔊</button>
+                        `;
+                        const ttsBtn = document.getElementById('text-tts-btn');
+                        if (ttsBtn) {
+                            ttsBtn.addEventListener('click', () => {
+                                if (!speechSynthesisAvailable) return alert('Text-to-speech not supported in this browser.');
+                                const utter = new SpeechSynthesisUtterance(data.translated_text);
+                                if (direction === 'en-hi') utter.lang = 'hi-IN';
+                                else if (direction === 'en-te') utter.lang = 'te-IN';
+                                else utter.lang = 'en-US';
+                                window.speechSynthesis.cancel();
+                                window.speechSynthesis.speak(utter);
+                            });
+                        }
+                    }
+                } else {
+                    alert('Translation failed. Please try again.');
+                }
+            })
+            .catch(err => {
+                console.error('Error translating:', err);
+                alert('Translation failed. Please try again.');
+            })
+            .finally(() => {
+                textTranslateBtn.disabled = false;
+                textTranslateBtn.textContent = 'Translate';
+            });
+        });
+    }
+
+    if (textSaveBtn) {
+        textSaveBtn.addEventListener('click', () => {
+            const inputText = textInput.value;
+            const translatedText = textTranslatedText.textContent;
+            const directionSelect = document.getElementById('text-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+            if (!inputText || !translatedText) {
+                alert('No translation to save.');
+                return;
+            }
+
+            fetch('/save_translation', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    input_text: inputText,
+                    translated_text: translatedText,
+                    direction: direction
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || 'Translation saved.'))
+            .catch(error => {
+                alert('Error saving translation.');
+                console.error(error);
+            });
+        });
+    }
+
+    // --- Voice input + translate ---
+    const voiceInputBtn = document.getElementById('voice-input-btn');
+    const voiceTextarea = document.getElementById('voice-textarea');
+    const voiceStatus = document.getElementById('voice-status');
+    const voiceTranslateBtn = document.getElementById('voice-translate-btn');
+    const voiceOutput = document.getElementById('voice-output');
+    const voiceTranslatedText = document.getElementById('voice-translated-text');
+    const voiceAudioContainer = document.getElementById('voice-audio-container');
+    const voiceSaveBtn = document.getElementById('voice-save-btn');
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    let recognition = null;
+    if (SpeechRecognition && voiceInputBtn && voiceTextarea && voiceStatus && voiceTranslateBtn) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.lang = 'en-US';
+
+        recognition.addEventListener('start', () => {
+            voiceStatus.textContent = 'Listening...';
+            voiceInputBtn.textContent = '🎤 Listening...';
+            voiceInputBtn.disabled = true;
+        });
+
+        recognition.addEventListener('result', (event) => {
+            const transcript = event.results[0][0].transcript || '';
+            voiceTextarea.value = transcript;
+            voiceStatus.textContent = 'Transcription complete. Click Translate to proceed.';
+            voiceInputBtn.textContent = '🎤 Speak Now';
+            voiceInputBtn.disabled = false;
+        });
+
+        recognition.addEventListener('error', (e) => {
+            console.error('Speech recognition error', e);
+            voiceStatus.textContent = 'Speech recognition failed. Try again.';
+            voiceInputBtn.textContent = '🎤 Speak Now';
+            voiceInputBtn.disabled = false;
+            alert('Speech recognition failed. Please try again.');
+        });
+
+        recognition.addEventListener('end', () => {
+            voiceInputBtn.textContent = '🎤 Speak Now';
+            voiceInputBtn.disabled = false;
+        });
+
+        voiceInputBtn.addEventListener('click', () => {
+            const directionSelect = document.getElementById('voice-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+            
+            if (direction === 'en-hi' || direction === 'en-te') recognition.lang = 'en-US';
+            else if (direction === 'hi-en') recognition.lang = 'hi-IN';
+            else if (direction === 'te-en') recognition.lang = 'te-IN';
+            else recognition.lang = 'en-US';
+            
+            try {
+                recognition.start();
+            } catch (err) {
+                console.warn('recognition.start() error:', err);
+            }
+        });
+
+        voiceTranslateBtn.addEventListener('click', () => {
+            const inputText = voiceTextarea.value.trim();
+            const directionSelect = document.getElementById('voice-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+            if (!inputText) {
+                alert('Please provide voice input first.');
+                return;
+            }
+
+            voiceStatus.textContent = 'Translating...';
+
+            const payload = { input_text: inputText, direction: direction };
+
+            fetch('/translate_api', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) throw new Error(data.error);
+                if (data.translated_text) {
+                    voiceTranslatedText.textContent = data.translated_text;
+                    voiceOutput.classList.add('show');
+                    voiceStatus.textContent = 'Translation complete.';
+
+                    const audioUrl = data.audio_path || data.translated_text_audio_url || null;
+                    if (audioUrl) {
+                        voiceAudioContainer.innerHTML = `
+                            <audio controls>
+                                <source src="${audioUrl}" type="audio/mpeg">
+                            </audio>
+                            <button id="voice-tts-btn" title="Text to Speech" style="margin-left:10px;padding:8px 15px;cursor:pointer;">🔊</button>
+                        `;
+                        const ttsBtn = document.getElementById('voice-tts-btn');
+                        if (ttsBtn) {
+                            ttsBtn.addEventListener('click', () => {
+                                if (!speechSynthesisAvailable) return alert('Text-to-speech not supported.');
+                                const utter = new SpeechSynthesisUtterance(data.translated_text);
+                                if (direction === 'en-hi') utter.lang = 'hi-IN';
+                                else if (direction === 'en-te') utter.lang = 'te-IN';
+                                else utter.lang = 'en-US';
+                                window.speechSynthesis.cancel();
+                                window.speechSynthesis.speak(utter);
+                            });
+                        }
+                    }
+                } else {
+                    alert('Translation failed. Please try again.');
+                    voiceStatus.textContent = 'Translation failed.';
+                }
+            })
+            .catch(err => {
+                console.error('Error translating:', err);
+                alert('Translation failed. Please try again.');
+                voiceStatus.textContent = 'Translation failed.';
+            });
+        });
+
+        if (voiceSaveBtn) {
+            voiceSaveBtn.addEventListener('click', () => {
+                const inputText = voiceTextarea.value;
+                const translatedText = voiceTranslatedText.textContent;
+                const directionSelect = document.getElementById('voice-direction');
+                const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+                if (!inputText || !translatedText) {
+                    alert('No translation to save.');
+                    return;
+                }
+
+                fetch('/save_translation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        input_text: inputText,
+                        translated_text: translatedText,
+                        direction: direction
+                    })
+                })
+                .then(response => response.json())
+                .then(data => alert(data.message || 'Translation saved.'))
+                .catch(error => alert('Error saving translation.'));
+            });
+        }
+    }
+
+    // --- Image Translate ---
+    const imageTranslateBtn = document.getElementById('image-translate-btn');
+    const imageInput = document.getElementById('image-input');
+    const imageOutput = document.getElementById('image-output');
+    const imageOriginalText = document.getElementById('image-original-text');
+    const imageTranslatedText = document.getElementById('image-translated-text');
+    const imageAudioContainer = document.getElementById('image-audio-container');
+    const imageSaveBtn = document.getElementById('image-save-btn');
+
+    if (imageTranslateBtn) {
+        imageTranslateBtn.addEventListener('click', () => {
+            const imageFile = imageInput.files[0];
+            const directionSelect = document.getElementById('image-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+            if (!imageFile) {
+                alert('Please select an image file.');
+                return;
+            }
+
+            imageTranslateBtn.disabled = true;
+            imageTranslateBtn.textContent = 'Translating...';
+
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('direction', direction);
+
+            fetch('/translate_image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+                if (data.translated_text) {
+                    imageOriginalText.textContent = data.extracted_text;
+                    imageTranslatedText.textContent = data.translated_text;
+                    imageOutput.classList.add('show');
+
+                    const audioUrl = data.audio_path;
+                    if (audioUrl) {
+                        imageAudioContainer.innerHTML = `
+                            <audio controls>
+                                <source src="${audioUrl}" type="audio/mpeg">
+                            </audio>
+                            <button id="image-tts-btn" title="Text to Speech" style="margin-left:10px;padding:8px 15px;cursor:pointer;">🔊</button>
+                        `;
+                        const ttsBtn = document.getElementById('image-tts-btn');
+                        if (ttsBtn) {
+                            ttsBtn.addEventListener('click', () => {
+                                if (!speechSynthesisAvailable) return alert('Text-to-speech not supported.');
+                                const utter = new SpeechSynthesisUtterance(data.translated_text);
+                                if (direction === 'en-hi') utter.lang = 'hi-IN';
+                                else if (direction === 'en-te') utter.lang = 'te-IN';
+                                else utter.lang = 'en-US';
+                                window.speechSynthesis.cancel();
+                                window.speechSynthesis.speak(utter);
+                            });
+                        }
+                    }
+                } else {
+                    alert('No translation result received.');
+                }
+            })
+            .catch(err => {
+                console.error('Network error:', err);
+                alert('Network error: ' + err.message);
+            })
+            .finally(() => {
+                imageTranslateBtn.disabled = false;
+                imageTranslateBtn.textContent = 'Translate Image';
+            });
+        });
+    }
+
+    if (imageSaveBtn) {
+        imageSaveBtn.addEventListener('click', () => {
+            const inputText = imageOriginalText.textContent;
+            const translatedText = imageTranslatedText.textContent;
+            const directionSelect = document.getElementById('image-direction');
+            const direction = directionSelect ? directionSelect.value : 'en-hi';
+
+            if (!inputText || !translatedText) {
+                alert('No translation to save.');
+                return;
+            }
+
+            fetch('/save_translation', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    input_text: inputText,
+                    translated_text: translatedText,
+                    direction: direction
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || 'Translation saved.'))
+            .catch(error => alert('Error saving translation.'));
+        });
+    }
+
+    // --- Saved Translations ---
+    function loadSaved() {
+        fetch('/get_saved')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('saved-list');
+                list.innerHTML = '';
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.input_text} -> ${item.translated_text} (${item.direction})`;
+                    list.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading saved:', error));
+    }
+
+    // --- Settings ---
+    let currentThemeMode = null;
+    function loadSettings() {
+        fetch('/get_settings')
+            .then(response => response.json())
+            .then(data => {
+                const mode = data.theme_mode || 'light';
+                document.getElementById('theme_mode').value = mode;
+                applyTheme(mode);
+                currentThemeMode = mode;
+            })
+            .catch(error => console.error('Error loading settings:', error));
+    }
+
+    function applyTheme(mode) {
+        if (mode === 'dark') {
+            document.body.style.background = '#2c3e50';
+        } else {
+            document.body.style.background = '#f5f6fa';
+        }
+    }
+
+    document.getElementById('settings-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const settings = { theme_mode: formData.get('theme_mode') };
+
+        fetch('/save_settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(settings)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message || 'Settings saved.');
+            applyTheme(settings.theme_mode);
+        })
+        .catch(error => alert('Error saving settings.'));
+    });
+});
+</script>
+</body>
+</html>

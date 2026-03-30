@@ -1,0 +1,164 @@
+[
+    {
+        "input_text": "hello",
+        "translated_text": "\u0938\u0932\u093e\u092e",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T10:13:14.887071"
+    },
+    {
+        "input_text": "good girl",
+        "translated_text": "\u0905\u091a\u094d\u091b\u0940 \u0932\u0921\u093c\u0915\u0940",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T10:24:19.268529"
+    },
+    {
+        "input_text": "good ",
+        "translated_text": "\u0905\u091a\u094d\u091b\u093e",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T10:24:34.868975"
+    },
+    {
+        "input_text": "where are you going",
+        "translated_text": "\u092b\u093f\u0930 \u0924\u0941\u092e \u0915\u093f\u0927\u0930 \u091c\u093e \u0930\u0939\u0947 \u0939\u094b?",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:04:32.068628"
+    },
+    {
+        "input_text": "everyone",
+        "translated_text": "\u0938\u092d\u0940",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:09:14.518080"
+    },
+    {
+        "input_text": "gather",
+        "translated_text": "\u090f\u0915\u0924\u094d\u0930 \u0915\u093f\u092f\u093e \u091c\u093e \u0930\u0939\u093e \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:13:16.889170"
+    },
+    {
+        "input_text": "the book is on table",
+        "translated_text": "\u092a\u0941\u0938\u094d\u0924\u0915 \u092e\u0947\u091c \u092a\u0930 \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:16:57.676075"
+    },
+    {
+        "input_text": "god is everywhere",
+        "translated_text": "\u0926\u0947\u0935\u0924\u093e \u0939\u0930 \u091c\u0917\u0939 \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:20:53.841846"
+    },
+    {
+        "input_text": "look at this tree",
+        "translated_text": "\u0907\u0938 \u092a\u0947\u0921\u093c \u0915\u094b \u0926\u0947\u0916\u094b",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:21:58.230928"
+    },
+    {
+        "input_text": "great",
+        "translated_text": "\u092e\u0939\u093e\u0928",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:28:57.858169"
+    },
+    {
+        "input_text": "great person",
+        "translated_text": "\u092e\u0939\u093e\u0928 \u0935\u094d\u092f\u0915\u094d\u0924\u093f",
+        "direction": "en-hi",
+        "timestamp": "2025-10-09T19:35:09.728312"
+    },
+    {
+        "input_text": "\"How are\r\nyou today?",
+        "translated_text": "\"\u0906\u092a \u0906\u091c \u0915\u0948\u0938\u0947 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948\u0902?",
+        "direction": "en-hi",
+        "timestamp": "2025-10-12T15:08:03.926139"
+    },
+    {
+        "input_text": "\"How are you today?",
+        "translated_text": "\"\u0906\u092a \u0906\u091c \u0915\u0948\u0938\u0947 \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948\u0902?",
+        "direction": "en-hi",
+        "timestamp": "2025-10-12T15:08:19.522858"
+    },
+    {
+        "input_text": "\"Please\r\nsend me the\r\ndocuments.\"\r\n",
+        "translated_text": "\"\u0915\u0943\u092a\u092f\u093e \u092e\u0941\u091d\u0947 \u0926\u0938\u094d\u0924\u093e\u0935\u0947\u091c\u093c\u094b\u0902 \u0915\u094b \u092d\u0947\u091c.\"",
+        "direction": "en-hi",
+        "timestamp": "2025-10-12T15:11:45.589834"
+    },
+    {
+        "input_text": "Please send me the documents\r\n",
+        "translated_text": "\u0915\u0943\u092a\u092f\u093e \u092e\u0941\u091d\u0947 \u0926\u0938\u094d\u0924\u093e\u0935\u0947\u091c\u093c\u094b\u0902 \u0915\u094b \u092d\u0947\u091c",
+        "direction": "en-hi",
+        "timestamp": "2025-10-12T15:13:42.583459"
+    },
+    {
+        "input_text": "\"Kal milte\r\nhain at the\r\ncafe",
+        "translated_text": "\"Let's see how at the moment you're thinking about it.\"",
+        "direction": "hi-en",
+        "timestamp": "2025-10-12T15:17:15.885210"
+    },
+    {
+        "input_text": "The weather is very pleasant today",
+        "translated_text": "\u0906\u091c \u092e\u094c\u0938\u092e \u092c\u0939\u0941\u0924 \u0938\u0941\u0916\u0926 \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-12T15:18:00.740718"
+    },
+    {
+        "input_text": "\u092e\u0948\u0902 \u0924\u0948\u0930 \u0938\u0915\u0924\u093e \u0939\u0942\u0901",
+        "translated_text": "I can swim",
+        "direction": "hi-en",
+        "timestamp": "2025-10-12T15:23:47.299008"
+    },
+    {
+        "input_text": "\u0935\u0939 \u0916\u0921\u093c\u093e \u0939\u094b \u0917\u092f\u093e",
+        "translated_text": "He stood up",
+        "direction": "hi-en",
+        "timestamp": "2025-10-12T15:26:01.704961"
+    },
+    {
+        "input_text": "good morning",
+        "translated_text": "\u0938\u0941\u092a\u094d\u0930\u092d\u093e\u0924",
+        "direction": "en-hi",
+        "timestamp": "2025-10-13T09:29:28.508433"
+    },
+    {
+        "input_text": "hello ",
+        "translated_text": "Listen",
+        "direction": "hi-en",
+        "timestamp": "2025-10-13T10:00:54.875717"
+    },
+    {
+        "input_text": "iam at anits",
+        "translated_text": "\u0906\u0908\u0906\u0908\u090f \u092a\u0930",
+        "direction": "en-hi",
+        "timestamp": "2025-10-14T12:16:49.119429"
+    },
+    {
+        "input_text": "today whether is extremely hot",
+        "translated_text": "\u0906\u091c \u0915\u094d\u092f\u093e \u0905\u0924\u094d\u092f\u0927\u093f\u0915 \u0917\u0930\u094d\u092e \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-14T12:17:59.355914"
+    },
+    {
+        "input_text": "today weather is extremely hot",
+        "translated_text": "\u0906\u091c \u092e\u094c\u0938\u092e \u092c\u0939\u0941\u0924 \u0917\u0930\u094d\u092e \u0939\u0948",
+        "direction": "en-hi",
+        "timestamp": "2025-10-14T12:18:28.607073"
+    },
+    {
+        "input_text": "Hello",
+        "translated_text": "\u0938\u0932\u093e\u092e",
+        "direction": "en-hi",
+        "timestamp": "2025-11-04T14:38:29.079336"
+    },
+    {
+        "input_text": "\u0906\u092a \u0915\u0948\u0938\u0947 \u0939\u094b",
+        "translated_text": "How are you?",
+        "direction": "hi-en",
+        "timestamp": "2025-11-13T11:56:39.583734"
+    },
+    {
+        "input_text": "good",
+        "translated_text": "\u0905\u091a\u094d\u091b\u093e",
+        "direction": "en-hi",
+        "timestamp": "2025-11-13T13:18:49.481966"
+    }
+]
